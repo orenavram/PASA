@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Pasa Gallery</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <!--<link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">-->
+            <link rel="stylesheet" href="css/general.css">
+            <link rel="stylesheet" href="css/nav.css">
+            <link rel="shortcut icon" type="image/x-icon" href="pics/logo.png" />
+
+            <!--files for the select tag-->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+            <!--files for the checkbox tag (toggle)-->
+            <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top" id="nav">
+            <div class="jumbotron" id="jumbo">
+                <div class="container">
+                    <div class="row" id="title-row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-1">
+                            <img src="pics/logo.png" id="antibody_image" class="img-rounded">
+                        </div>
+                        <div class="col-md-9">
+                            <span id="pasa-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" id="nav_container">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="nav navbar-nav" id="menu-nav">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="overview.html">Overview</a>
+                            </li>
+                            <li class="active">
+                                <a href="gallery.html">Gallery</a>
+                            </li>
+                            <li>
+                                <a href="terms.html">Terms of Use</a>
+                            </li>
+                            <li>
+                                <a href="credits.html">Credits</a>
+                            </li>
+                            <li>
+                                <a href="https://english.tau.ac.il/" id="tau-link" target="_blank">
+                                    <img src=pics/TAU_LOGO.png id="tau-logo">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="behind-nav-bar">
+        </div>
+        <div class="container" id="gallery_container">
+            <h2></h2>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    <h2 align="center">In addition to various textual outputs PASA provides several plots that summarizes different statistics of the data. For example:</h2>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (1) A histogram of the cdr3 IGH length
+                    <br><br>
+                    <img src="pics/cdr3_IGH_length_distributions.png" style="height: 60%; width: 60%;">
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (2) A histogram of the IGH DJ counts
+                    <br><br>
+                    <img src="pics/IGH_DJ_counts.png" style="height: 60%; width: 60%;">
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (3) A histogram of the IGH V counts
+                    <br><br>
+                    <img src="pics/IGH_V_counts.png" style="height: 60%; width: 60%;">
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (4) A histogram of the IGH VDJ counts
+                    <br><br>
+                    <img src="pics/IGH_VDJ_counts.png" style="height: 60%; width: 60%;">
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (5) Isotypes distribution
+                    <br><br>
+                    <img src="pics/Isotypes_distribution.png" style="height: 60%; width: 60%;">
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (6) proteomics vs genetics
+                    <br><br>
+                    <img src="pics/proteomics_vs_genetics.png" style="height: 70%; width: 100%;">
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br><br>
+            <br><br><br>
+        </div>
+        <nav role="navigation" class="navbar-inverse navbar-fixed-bottom ng-binding" style="color: #cccccc; text-align: center;">
+            <h4>
+                    Research Site | <a href="https://www.tau.ac.il/~talp/" target="_blank">Pupko Group</a>
+            </h4>
+        </nav>
+    </body>
+</html>

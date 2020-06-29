@@ -1,0 +1,4 @@
+ssh bioseq@compute-0-299
+rm -r /bioseq/data/results/pasa/debug/*
+cp -r /bioseq/data/results/pasa/backup/* /bioseq/data/results/pasa/debug/
+/bioseq/bioSequence_scripts_and_constants/q_submitter_power.py /bioseq/data/results/pasa/debug/pasa.cmds /bioseq/data/results/pasa/debug/ -q "pupkowebr -l nodes=compute-0-292"
