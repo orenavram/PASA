@@ -93,6 +93,13 @@
                                     and requires (at least) 2 technical replicates of each fraction (elution and flow-through).
                                     See running example <a href="https://pasa.tau.ac.il/index_example.html" target="_blank">input</a> and <a href="https://pasa.tau.ac.il/results/example/results.html" target="_blank">output</a>.</p>
                             </div>
+                            <div class="form-group db">
+                                <b>DB files:</b><br>
+                                <label class="btn btn-default btn-file">
+                                    <div name="file_button"></div> <input type="file" name="db" accept="zip" required>
+                                </label>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#db_modal">&#xe085;</button><br>
+                            </div>
                             <div class="form-group">
                                 <b> Peptides data type:</b><br>
                                 <input type="checkbox" id="checkbox" name="checkbox" data-toggle="toggle" data-on="Peptides (text) files" data-off="Mass-Spec (raw) files" onchange="RawOrTxt()" data-width="250" data-onstyle="default" data-offstyle="primary">
@@ -101,33 +108,30 @@
                             <div class="form-group" id="el_raw_div">
                                 <b> Elution raw data:</b><br>
                                 <label class="btn btn-default btn-file">
-                                    <div name="file_button"></div> <input type="file" name="el" id="el">  <!--onchange="$('#upload-file-info').val($(this).val());"-->
+                                    <div name="file_button"></div> <input type="file" name="el" id="el" accept="zip">  <!--onchange="$('#upload-file-info').val($(this).val());"-->
                                 </label>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#el_raw_modal">&#xe085;</button><br>
                             </div>
                             <div class="form-group" id="ft_raw_div">
                                 <b> Flow-through raw data:</b><br>
                                 <label class="btn btn-default btn-file">
-                                    <div name="file_button"></div> <input type="file" name="ft" id="ft">
+                                    <div name="file_button"></div> <input type="file" name="ft" id="ft" accept="zip">
                                 </label>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#ft_raw_modal">&#xe085;</button><br>
                             </div>
                             <div class="form-group" id="el_peptides_div" hidden>
                                 <b> Elution peptides list:</b><br>
                                 <label class="btn btn-default btn-file">
                                     <div name="file_button"></div> <input type="file" name="el_peptides" id="el_peptides">
                                 </label>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#el_txt_modal">&#xe085;</button><br>
                             </div>
                             <div class="form-group" id="ft_peptides_div" hidden>
                                 <b> Flow-through peptides list:</b><br>
                                 <label class="btn btn-default btn-file">
                                     <div name="file_button"></div> <input type="file" name="ft_peptides" id="ft_peptides">
                                 </label>
-                            </div>
-                            <div class="form-group db">
-                                <b>DB files:</b><br>
-                                <label class="btn btn-default btn-file">
-                                    <div name="file_button"></div> <input type="file" name="db" required>
-                                </label>
-                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#db_modal">&#xe085;</button><br>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#ft_txt_modal">&#xe085;</button><br>
                             </div>
 
                             <button type="button" class="btn btn-warning" id="advanced_button" onclick="openAdvanced()"><span class="glyphicon glyphicon-cog"></span>&nbsp;Advanced options</button>
@@ -170,6 +174,26 @@
                                 </div>
                             </div>
                             <!-- Modal -->
+                            <div class="modal fade" id="db_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Data bases</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            Uploaded databases should be in <a href="" target="_blank">ASAP</a> format
+                                            (only files of the same format of "proteomics_db.txt" are allowed as we assume a
+                                            specific header structure to parse their information).
+                                            All databases should be archived together (ZIP
+                                            format) and be uploaded as a single ".zip" file.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
                             <div class="modal fade" id="data_type_modal" role="dialog">
                                 <div class="modal-dialog">
 
@@ -182,25 +206,91 @@
                                         <div class="modal-body" align="justify">
                                             Peptides data can be any of the following options: <br><br>
                                             <ul>
-                                                <li><b>Mass-Spec files</b> - raw LC-MS/MS files <br><br>TODO$$$$$$$.</li><br>
-                                                <li><b>Peptides files</b> - text files output by MaxQuant run <br><br>TODO$$$$$$$.</b></li><br>
+                                                <li><b>Mass-Spec files</b> - raw LC-MS/MS files <br><br></li><br>
+                                                <li><b>Peptides files</b> - text files output by MaxQuant run <br><br></b></li><br>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Modal -->
-                            <div class="modal fade" id="db_modal" role="dialog">
+                            <div class="modal fade" id="el_raw_modal" role="dialog">
                                 <div class="modal-dialog">
 
                                     <!-- Modal content-->
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h3 class="modal-title">Data bases</h3>
+                                            <h3 class="modal-title">Elution raw files</h3>
                                         </div>
                                         <div class="modal-body" align="justify">
-                                            Databases in ASAP format. All databases should be archived together (ZIP format) and be uploaded as a single zip file <br><br>TODO$$$$$$$.<br>
+                                            Uploaded raw files should be in a ".raw" format. All Elution raw files
+                                            should be archived together (ZIP format) and be uploaded as a single ".zip" file.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="ft_raw_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Flow-through raw files</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            Uploaded raw files should be in a ".raw" format. All Flow-through raw files
+                                            should be archived together (ZIP format) and be uploaded as a single ".zip" file.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="el_txt_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Elution peptides text file</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            A single ".txt" file containing the peptides and their intensities
+                                            (in each replicate), detected by MaxQuant analysis over the Elution fraction.
+                                            After running MaxQuant, this file can be found in the following path:
+                                            <br>
+                                            $maxquant_output_folder/combined/txt/peptides.txt
+                                            <br>
+                                            Notice that the different replications should be set as different experiments (a, b, c, etc...)
+                                            when running MaxQuant (see example configuration file
+                                            <a href="https://pasa.tau.ac.il/example/mqpar_template.xml" target="_blank">here</a>).
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="ft_txt_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Flow-through peptides text file</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            A single ".txt" file containing the peptides and their intensities
+                                            (in each replicate), detected by MaxQuant analysis over the Flow-through fraction.
+                                            After running MaxQuant, this file can be found in the following path:
+                                            <br>
+                                            $maxquant_output_folder/combined/txt/peptides.txt
+                                            <br>
+                                            Notice that the different replications should be set as different experiments (a, b, c, etc...)
+                                            when running MaxQuant (see example configuration file
+                                            <a href="https://pasa.tau.ac.il/example/mqpar_template.xml" target="_blank">here</a>).
                                         </div>
                                     </div>
                                 </div>
@@ -216,7 +306,7 @@
                                             <h3 class="modal-title">Digestion enzyme</h3>
                                         </div>
                                         <div class="modal-body" align="justify">
-                                            Digestion enzyme name for MaxQuant Analysis. <br><br>TODO$$$$$$$.<br>
+                                            Digestion enzyme for MaxQuant Analysis.<br>
                                         </div>
                                     </div>
                                 </div>
@@ -232,7 +322,8 @@
                                             <h3 class="modal-title">Mininmal enrichment level</h3>
                                         </div>
                                         <div class="modal-body" align="justify">
-                                            The minimal enrichment fold level required for passing filtration. If a peptide's intensity in the flow-through is n, its elution intensity should be at least n times minimal_enrichment_fold in order to be kept for downstream analysis <br><br>TODO$$$$$$$.<br>
+                                            The minimal enrichment fold level required for passing the initial filtration.
+                                            If a peptide's intensity in the flow-through is <i>n</i>, its elution intensity should be at least <i>n</i> times <i>Min enrichment ratio</i> in order to be kept for downstream analysis.<br>
                                         </div>
                                     </div>
                                 </div>
