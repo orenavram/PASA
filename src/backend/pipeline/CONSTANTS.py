@@ -4,12 +4,13 @@ import os
 
 # constants to use when sending e-mails using the server admin's email address.
 ADMIN_EMAIL = 'TAU BioSequence <bioSequence@tauex.tau.ac.il>'
+# ADMIN_EMAIL = 'Yariv Wine <yariv.wine@gmail.com>'
 SMTP_SERVER = 'mxout.tau.ac.il'
 OWNER_EMAIL = 'orenavram@gmail.com'
 
 # general variables
 SERVERS_RESULTS_DIR = '/bioseq/data/results'
-RELOAD_INTERVAL = 3
+RELOAD_INTERVAL = 5
 RELOAD_TAGS = f'<META HTTP-EQUIV="REFRESH" CONTENT="{RELOAD_INTERVAL}"/>'
 
 WEBSERVER_NAME = 'pasa'
@@ -49,7 +50,7 @@ FONT_STYLE = 'font-family: Georgia'
 CONTAINER_STYLE = f'{CONTAINER_WIDTH}; {CONTAINER_NO_MARGIN}; {FONT_STYLE}'
 
 PROGRESS_BAR_TAG = '''<div class="progress">
-                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:2%">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:1%">
                 <!--MaxQuant Analysis ; Peptides Filtration ; Peptides Classification ; Plots Generation-->
                 </div>
             </div>\t\t'''
