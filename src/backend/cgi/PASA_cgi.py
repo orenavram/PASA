@@ -149,7 +149,7 @@ def save_file_to_disk(cgi_debug_path_f, form, wd, file_type):
     data_path = os.path.join(f'{wd}/{file_type}{os.path.splitext(file_name)[-1]}')
     with open(data_path, 'wb') as data_f:
         data_f.write(data)
-    write_to_debug_file(cgi_debug_path_f, f'Uploaded data was saved to disk successfully\n')
+    write_to_debug_file(cgi_debug_path_f, f'Uploaded data was saved to {data_path} successfully\n')
     return data_path, file_name
 
 
@@ -174,7 +174,7 @@ def run_cgi():
 
     # random_chars = "".join(choice(string.ascii_letters + string.digits) for x in range(20))
     run_number = str(round(time())) + str(randint(10 ** 19, 10 ** 20 - 1))  # adding 20 random digits to prevent users see data that are not their's
-    run_number = str(randint(1, 10 ** 4 - 1))  # adding 20 random digits to prevent users see data that are not their's
+    run_number = str(randint(1, 10 ** 6 - 1))  # adding 20 random digits to prevent users see data that are not their's
     if form['example_page'].value == 'yes':
         run_number = 'example'
 
