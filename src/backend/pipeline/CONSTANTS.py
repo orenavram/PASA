@@ -57,3 +57,8 @@ PROGRESS_BAR_TAG = '''<div class="progress">
 
 # miscellaneous
 MAXQUANT_DIR_NAME = 'maxquant_analysis'
+
+# peptides classification files
+NON_INFORMATIVE_CSV_NAME = 'non_informative.csv'
+INFORMATIVE_CSV_NAME = 'informative.csv'
+CDR3_INFORMATIVE_CSV_NAME = 'cdr3_informative.csv'
