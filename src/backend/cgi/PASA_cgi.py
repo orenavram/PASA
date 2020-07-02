@@ -350,7 +350,7 @@ def run_cgi():
         sleep(2 * CONSTS.RELOAD_INTERVAL)
         with open(output_html_path) as f:
             html_content = f.read()
-        html_content = html_content.replace(CONSTS.RELOAD_TAGS, '')
+        html_content = html_content.replace(CONSTS.RELOAD_TAGS, f'<!--{CONSTS.RELOAD_TAGS}-->')
         with open(output_html_path, 'w') as f:
             f.write(html_content)
 
