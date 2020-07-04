@@ -229,6 +229,7 @@ def run_cgi():
         el_peptides_file_name = None
         ft_peptides_file_name = None
         digestion_enzyme = None
+        maxquant_analysis_is_needed = None
         if form['example_page'].value == 'yes':  # example data
             write_to_debug_file(cgi_debug_path_f, f'Linking example data FROM {CONSTS.EXAMPLE_DATA_PATH} TO {wd}\n')
             copy_example_data(wd, cgi_debug_path_f)
@@ -238,6 +239,7 @@ def run_cgi():
             # dbs_zip = f'{wd}/{CONSTS.EXAMPLE_DB_NAME}'
             digestion_enzyme = 'Trypsin'  # TODO: check what is recieved when sending several values
             enrichment_threshold = 5
+            maxquant_analysis_is_needed = True
         else:
             write_to_debug_file(cgi_debug_path_f, f'\n{"#"*80}\nuploading data\n')
             database_file_path, database_file_name = save_file_to_disk(cgi_debug_path_f, form, wd, 'db')
