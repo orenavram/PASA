@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>PASA Gallery</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <!--<link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">-->
+            <link rel="stylesheet" href="css/general.css">
+            <link rel="stylesheet" href="css/nav.css">
+            <link rel="shortcut icon" type="image/x-icon" href="pics/logo.png" />
+
+            <!--files for the select tag-->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+            <!--files for the checkbox tag (toggle)-->
+            <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top" id="nav">
+            <div class="jumbotron" id="jumbo">
+                <div class="container">
+                    <div class="row" id="title-row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-1">
+                            <img src="pics/logo.png" id="antibody_image" class="img-rounded">
+                        </div>
+                        <div class="col-md-9">
+                            <span id="pasa-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" id="nav_container">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="nav navbar-nav" id="menu-nav">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="overview.html">Overview</a>
+                            </li>
+                            <li class="active">
+                                <a href="gallery.html">Gallery</a>
+                            </li>
+                            <li>
+                                <a href="terms.html">Terms of Use</a>
+                            </li>
+                            <li>
+                                <a href="credits.html">Credits</a>
+                            </li>
+                            <li>
+                                <a href="https://english.tau.ac.il/" id="tau-link" target="_blank">
+                                    <img src=pics/TAU_LOGO.png id="tau-logo">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="behind-nav-bar">
+        </div>
+        <div class="container" id="gallery_container">
+            <h2></h2>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    PASA provides both textual and graphical output. The textual output is cleaned and structured
+                    (to facilitate further ad-hoc analyses) and includes, for example, a list of curated
+                    peptides that were found to be enriched in the Elution
+                    with respect to the Flow-through, and a list of CDR3 Informative peptides (i.e., peptides that
+                    were mapped to antigen-specific antibodies). In addition to various textual outputs PASA
+                    provides several plots that summarize different statistics of the data. For example:
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (1) Isotypes distribution
+                    <br><br>
+                    <p align="center"><img src="pics/isotype_distribution.png" style="height: 60%; width: 60%;"></p>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (2) A bar plot of the AA length of the human CDRH3 (the CDR3 region of the heavy chain)
+                    <br><br>
+                    <p align="center"><img src="pics/cdr3_length.png" style="height: 60%; width: 60%;"></p>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (3) A bar plot showing the frequencies of the various IGHV family usage
+                    <br><br>
+                    <p align="center"><img src="pics/v_usage.png" style="height: 60%; width: 60%;"></p>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (4) A bar plot showing the frequencies of the various DJ family usage in CDRH3
+                    <br><br>
+                    <p align="center"><img src="pics/dj_usage.png" style="height: 60%; width: 60%;"></p>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (5) A bar plot showing the frequencies of the various VDJ family usage in CDRH3
+                    <br><br>
+                    <p align="center"><img src="pics/vdj_usage.png" style="height: 60%; width: 60%;"></p>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    (6) A scatter plot showing the proteomic normalized intensities of peptides mapped to a user-provided BCR-Seq database intensity (this plot is generated per database)
+                    <br><br>
+                    <p align="center"><img src="pics/proteomic_intensities_with_respect_to_3.png" style="height: 70%; width: 70%;"></p>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <br><br><br>
+            <br><br><br>
+        </div>
+        <nav role="navigation" class="navbar-inverse navbar-fixed-bottom ng-binding" style="color: #cccccc; text-align: center; font-family: Georgia">
+            <h4>
+                    Research Site | <a href="https://www.tau.ac.il/~talp/" target="_blank">Pupko Group</a>
+            </h4>
+        </nav>
+    </body>
+</html>

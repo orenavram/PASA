@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>PASA</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <link rel="shortcut icon" type="image/x-icon" href="pics/logo.png" />
+        <!--files for the checkbox tag (toggle)-->
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+        <!--files for advanced options activation-->
+        <script src="scripts/form_handler.js"></script>
+
+        <!--files for selectpicker-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!--files for the select tag-->
+        <!--MUST BE LAST ONE. IF APPEARS EARLIER IT WON'T WORK-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+        <!--files for the checkbox tag (toggle)-->
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    </head>
+    <body>
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top" id="nav">
+            <div class="jumbotron" id="jumbo">
+                <div class="container">
+                    <div class="row" id="title-row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-1">
+                            <img src="pics/logo.png" id="antibody_image" class="img-rounded">
+                        </div>
+                        <div class="col-md-9">
+                            <span id="pasa-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" id="nav_container">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="nav navbar-nav" id="menu-nav">
+                            <li class="active">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="overview.html">Overview</a>
+                            </li>
+                            <li>
+                                <a href="gallery.html">Gallery</a>
+                            </li>
+                            <li>
+                                <a href="terms.html">Terms of Use</a>
+                            </li>
+                            <li>
+                                <a href="credits.html">Credits</a>
+                            </li>
+                            <li>
+                                <a href="https://english.tau.ac.il/" id="tau-link" target="_blank">
+                                    <img src=pics/TAU_LOGO.png id="tau-logo">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="behind-nav-bar"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
+                    <form id="PASA_form" action="https://pasa.tau.ac.il/cgi-bin/PASA_cgi.py" method="post" ENCTYPE="multipart/form-data" target="_blank">
+                        <div class="container" id="basic">
+                            <div class="form-group">
+                                <b>DB files:</b><br>
+                                <label class="btn btn-default btn-file">
+                                    <a href="example/dbs.zip" target="_blank">dbs.zip</a>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <b> Data type:</b><br>
+                                <input disabled type="checkbox" id="checkbox" name="checkbox" data-toggle="toggle" data-on="Peptides (text) files" data-off="Mass-Spec (raw) files" onchange="RawOrTxt()" data-width="250" data-onstyle="default" data-offstyle="primary">
+                            </div>
+                            <div class="form-group" id="el_raw_div">
+                                <b> Elution raw data:</b><br>
+                                <label class="btn btn-default btn-file">
+                                    <div name="file_button" disabled><a href="example/el.zip" target="_blank">Elution example data.zip</a></div><!--onchange="$('#upload-file-info').val($(this).val());"-->
+                                </label>
+                            </div>
+                            <div class="form-group" id="ft_raw_div">
+                                <b> Flow-through raw data:</b><br>
+                                <label class="btn btn-default btn-file">
+                                    <div name="file_button" disabled><a href="example/ft.zip" target="_blank">Flow-through example data.zip</a></div><!--onchange="$('#upload-file-info').val($(this).val());"-->
+                                </label>
+                            </div>
+
+                            <button type="button" class="btn btn-warning" id="advanced_button" onclick="openAdvanced()"><span class="glyphicon glyphicon-cog"></span>&nbsp;Advanced options</button>
+                            <br>
+                            <br>
+                            <div class="form-group db" id="enzyme_div" hidden>
+                                <b>Enzyme: </b>
+                                <select id="enzyme" name="enzyme" class="selectpicker form-control" data-width="auto" >
+                                    <option value="ArgC" disabled>ArgC</option>
+                                    <option value="AspC" disabled>AspC</option>
+                                    <option value="AspN" disabled>AspN</option>
+                                    <option value="Chymotrypsin" disabled>Chymotrypsin</option>
+                                    <option value="Chymotrypsin+" disabled>Chymotrypsin+</option>
+                                    <option value="D.P" disabled>D.P</option>
+                                    <option value="GluC" disabled>GluC</option>
+                                    <option value="GluN" disabled>GluN</option>
+                                    <option value="LysC" disabled>LysC</option>
+                                    <option value="LysC/P" disabled>LysC/P</option>
+                                    <option value="LysN" disabled>LysCN</option>
+                                    <option value="Trypsin" selected>Trypsin</option>
+                                    <option value="Trypsin/P" disabled>Trypsin/P</option>
+                                </select>
+                            </div>
+                            <div class="form-group db" id="enrichment_threshold_div" hidden>
+                                <label for="len_threshold">Intensity ratio for elution/flow-through:</label>
+                                <input type="number" class="form-control-2" min="0" step="-1000" max="1000" id="len_threshold" name="enrichment_threshold" value="5" disabled>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-5">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="We'll send you a link to the results" >
+                                    <input class="form-control" name="confirm_email" type="hidden">
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="job_title">A descriptive job title:</label>
+                                    <input type="text" class="form-control" id="job_title" name="job_title" placeholder="(optional)">
+                                </div>
+                            </div>
+
+                            <input name="example_page" value="yes" id="example_page" hidden>
+                            <input type="checkbox" id="open_advanced_flag" value="off" hidden>
+                            <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Submit</button>
+                            <br><br>
+                            <a href="index.html">
+                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;Reset</button>
+                            </a>
+                            <!--<a href="index.html"><button type="button" class="btn btn-info">Clear Example</button></a>-->
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <nav role="navigation" class="navbar-inverse navbar-fixed-bottom ng-binding" style="color: #cccccc; text-align: center; font-family: 'Georgia';">
+            <h4>
+                    Research Site | <a href="https://www.tau.ac.il/~talp/" target="_blank">Pupko Group</a>
+            </h4>
+        </nav>
+    </body>
+</html>

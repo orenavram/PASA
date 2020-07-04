@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>PASA</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <link rel="shortcut icon" type="image/x-icon" href="pics/logo.png" />
+        <!--files for the checkbox tag (toggle)-->
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+        <!--files for advanced options activation-->
+        <script src="scripts/form_handler.js"></script>
+
+        <!--files for selectpicker-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!--files for the select tag-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+        <!--files for the checkbox tag (toggle)-->
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    </head>
+    <body>
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top" id="nav">
+            <div class="jumbotron" id="jumbo">
+                <div class="container">
+                    <div class="row" id="title-row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-1">
+                            <img src="pics/logo.png" id="antibody_image" class="img-rounded">
+                        </div>
+                        <div class="col-md-9">
+                            <span id="pasa-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" id="nav_container">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="nav navbar-nav" id="menu-nav">
+                            <li class="active">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="overview.html">Overview</a>
+                            </li>
+                            <li>
+                                <a href="gallery.html">Gallery</a>
+                            </li>
+                            <li>
+                                <a href="terms.html">Terms of Use</a>
+                            </li>
+                            <li>
+                                <a href="credits.html">Credits</a>
+                            </li>
+                            <li>
+                                <a href="https://english.tau.ac.il/" id="tau-link" target="_blank">
+                                    <img src=pics/TAU_LOGO.png id="tau-logo">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="behind-nav-bar"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
+                    <form id="PASA_form" action="https://pasa.tau.ac.il/cgi-bin/PASA_cgi.py" method="post" ENCTYPE="multipart/form-data" target="_blank" onsubmit="return validate_read_files() ">
+                        <div class="container" id="basic">
+
+                            <div class="form-group">
+                                <p align="justify">The PASA pipeline allows generating quantitative and qualitative molecular measurements related to
+                                    serum antibody repertoire from high-resolution proteomic data. PASA
+                                    is applicable for researchers at all levels that are interested in addressing basic
+                                    questions related to B cell development and differentiation, as well as an application
+                                    focused tool for vaccine development, immunodiagnostic discovery and monoclonal
+                                    antibody engineering. The web server accepts proteomics spectral files (in '.raw' format),
+                                    and requires (at least) two technical replicates of each fraction (elution and flow-through).
+                                    See running example <a href="https://pasa.tau.ac.il/index_example.html" target="_blank">input</a> and <a href="https://pasa.tau.ac.il/results/example/results.html" target="_blank">output</a>.</p>
+                            </div>
+                            <div class="form-group db">
+                                <b>DB files:</b><br>
+                                <label class="btn btn-default btn-file">
+                                    <div name="file_button"></div> <input type="file" name="db" accept=".zip" required>
+                                </label>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#db_modal">&#xe085;</button><br>
+                            </div>
+                            <div class="form-group">
+                                <b> Peptides data type:</b><br>
+                                <input type="checkbox" id="checkbox" name="checkbox" data-toggle="toggle" data-on="Peptides (text) files" data-off="Mass-Spec (raw) files" onchange="RawOrTxt()" data-width="250" data-onstyle="default" data-offstyle="primary">
+                                <button type="button" class="btn btn-lg glyphicon" data-toggle="modal" data-target="#data_type_modal">&#xe085;</button><br>
+                            </div>
+                            <div class="form-group" id="el_raw_div">
+                                <b> Elution raw data:</b><br>
+                                <label class="btn btn-default btn-file">
+                                    <div name="file_button"></div> <input type="file" name="el" id="el" accept=".zip">  <!--onchange="$('#upload-file-info').val($(this).val());"-->
+                                </label>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#el_raw_modal">&#xe085;</button><br>
+                            </div>
+                            <div class="form-group" id="ft_raw_div">
+                                <b> Flow-through raw data:</b><br>
+                                <label class="btn btn-default btn-file">
+                                    <div name="file_button"></div> <input type="file" name="ft" id="ft" accept=".zip">
+                                </label>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#ft_raw_modal">&#xe085;</button><br>
+                            </div>
+                            <div class="form-group" id="el_peptides_div" hidden>
+                                <b> Elution peptides list:</b><br>
+                                <label class="btn btn-default btn-file">
+                                    <div name="file_button"></div> <input type="file" name="el_peptides" id="el_peptides">
+                                </label>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#el_txt_modal">&#xe085;</button><br>
+                            </div>
+                            <div class="form-group" id="ft_peptides_div" hidden>
+                                <b> Flow-through peptides list:</b><br>
+                                <label class="btn btn-default btn-file">
+                                    <div name="file_button"></div> <input type="file" name="ft_peptides" id="ft_peptides">
+                                </label>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#ft_txt_modal">&#xe085;</button><br>
+                            </div>
+
+                            <button type="button" class="btn btn-warning" id="advanced_button" onclick="openAdvanced()"><span class="glyphicon glyphicon-cog"></span>&nbsp;Advanced options</button>
+                            <br>
+                            <br>
+                                <div class="form-group db" id="enzyme_div" hidden>
+                                <b>Digestion enzyme: </b>
+                                    <select id="enzyme" name="enzyme" class="selectpicker form-control" data-width="auto" >
+                                    <option value="ArgC">ArgC</option>
+                                    <option value="AspC">AspC</option>
+                                    <option value="AspN">AspN</option>
+                                    <option value="Chymotrypsin">Chymotrypsin</option>
+                                    <option value="Chymotrypsin+">Chymotrypsin+</option>
+                                    <option value="D.P">D.P</option>
+                                    <option value="GluC">GluC</option>
+                                    <option value="GluN">GluN</option>
+                                    <option value="LysC">LysC</option>
+                                    <option value="LysC/P">LysC/P</option>
+                                    <option value="LysN">LysCN</option>
+                                    <option value="Trypsin" selected>Trypsin</option>
+                                    <option value="Trypsin/P">Trypsin/P</option>
+                                </select>
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#enzyme_modal">&#xe085;</button><br>
+
+                            </div>
+                            <div class="form-group db" id="enrichment_threshold_div" hidden>
+                                <label for="enrichment_threshold">Min enrichment ratio:</label>
+                                <input type="number" class="form-control-2" min="0.00001" step="any" id="enrichment_threshold" name="enrichment_threshold" value="5">
+                                <button type="button" class="btn btn-lg glyphicon label-modal" data-toggle="modal" data-target="#enrichment_modal">&#xe085;</button><br>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-5">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="We'll send you a link to the results" >
+                                    <input class="form-control" name="confirm_email" type="hidden">
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="job_title">A descriptive job title:</label>
+                                    <input type="text" class="form-control" id="job_title" name="job_title" placeholder="(optional)">
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="db_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Data base files</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            Uploaded databases should be in <a href="" target="_blank">ASAP</a> format
+                                            (only files of the same format of "proteomics_db.txt" are allowed as we assume a
+                                            specific header structure to parse their information).
+                                            All databases (even if there is only one) should be archived into
+                                            a single ".zip" file and uploaded together.
+                                            Please use neither spaces nor commas in the different file names as
+                                            it might cause to an unexpected behavior.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="data_type_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Peptides data types</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            Peptides data can be any of the following options: <br><br>
+                                            <ul>
+                                                <li><b>Mass-Spec files</b> - raw LC-MS/MS files <br><br></li><br>
+                                                <li><b>Peptides files</b> - text files output by MaxQuant run <br><br></b></li><br>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="el_raw_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Elution raw files</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            Uploaded raw files should be in a ".raw" format.
+                                            All Elution raw files should be archived into
+                                            a single ".zip" file and uploaded together.
+                                            Please use neither spaces nor commas in the different file names as
+                                            it might cause to an unexpected behavior.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="ft_raw_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Flow-through raw files</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            Uploaded raw files should be in a ".raw" format.
+                                            All Flow-through raw files should be archived into
+                                            a single ".zip" file and uploaded together.
+                                            Please use neither spaces nor commas in the different file names as
+                                            it might cause to an unexpected behavior.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="el_txt_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Elution peptides text file</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            A single ".txt" file containing the peptides and their intensities
+                                            (in each replicate), detected by MaxQuant analysis over the Elution fraction.
+                                            After running MaxQuant, this file can be found in the following path:
+                                            <br>
+                                            $maxquant_output_folder/combined/txt/peptides.txt
+                                            <br>
+                                            Notice that the different replications should be set as different experiments (a, b, c, etc...)
+                                            when running MaxQuant (see example configuration file
+                                            <a href="https://pasa.tau.ac.il/example/mqpar_template.xml" target="_blank">here</a>).
+                                            Please use neither spaces nor commas in the different file names as
+                                            it might cause to an unexpected behavior.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="ft_txt_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Flow-through peptides text file</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            A single ".txt" file containing the peptides and their intensities
+                                            (in each replicate), detected by MaxQuant analysis over the Flow-through fraction.
+                                            After running MaxQuant, this file can be found in the following path:
+                                            <br>
+                                            $maxquant_output_folder/combined/txt/peptides.txt
+                                            <br>
+                                            Notice that the different replications should be set as different experiments (a, b, c, etc...)
+                                            when running MaxQuant (see example configuration file
+                                            <a href="https://pasa.tau.ac.il/example/mqpar_template.xml" target="_blank">here</a>).
+                                            Please use neither spaces nor commas in the different file names as
+                                            it might cause to an unexpected behavior.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="enzyme_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Digestion enzyme</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            Digestion enzyme for MaxQuant Analysis.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="enrichment_modal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Mininmal enrichment level</h3>
+                                        </div>
+                                        <div class="modal-body" align="justify">
+                                            The minimal enrichment fold level required for passing the initial filtration.
+                                            If a peptide's intensity in the flow-through is <i>n</i>, its elution intensity should be at least <i>n</i> times <i>Min enrichment ratio</i> in order to be kept for downstream analysis.<br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" id="please-note" align="justify">  <!--align="justify">-->
+                                Please notice that since the raw files are (very) heavy. Thus, it might require a few hrs to upload the data, depending on your network speed. It is recommended to use Ethernet connection rather than WiFi.
+                            </div>
+
+                            <input name="example_page" value="no" id="example_page" hidden>
+                            <input type="checkbox" id="open_advanced_flag" value="off" hidden>
+                            <button type="submit" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Submit</button>
+                            <br><br>
+                                <button type="reset" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;Reset</button>
+                                <a href="index_example.html"><button type="button" class="btn btn-info">Load Example</button></a>
+                            <!--<a href="index.html"><button type="button" class="btn btn-info">Clear Example</button></a>-->
+                            <br><br><br><br>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <nav role="navigation" class="navbar-inverse navbar-fixed-bottom ng-binding" style="color: #cccccc; text-align: center; font-family: Georgia;">
+            <h4>
+                    Research Site | <a href="https://www.tau.ac.il/~talp/" target="_blank">Pupko Group</a>
+            </h4>
+        </nav>
+    </body>
+</html>

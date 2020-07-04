@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>PASA Overview</title>
+
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <!--<link rel="stylesheet" href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css">-->
+            <link rel="stylesheet" href="css/general.css">
+            <link rel="stylesheet" href="css/nav.css">
+            <link rel="shortcut icon" type="image/x-icon" href="pics/logo.png" />
+
+            <!--files for the select tag-->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+            <!--files for the checkbox tag (toggle)-->
+            <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top" id="nav">
+            <div class="jumbotron" id="jumbo">
+                <div class="container">
+                    <div class="row" id="title-row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-1">
+                            <img src="pics/logo.png" id="antibody_image" class="img-rounded">
+                        </div>
+                        <div class="col-md-9">
+                            <span id="pasa-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" id="nav_container">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="nav navbar-nav" id="menu-nav">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li class="active">
+                                <a href="overview.html">Overview</a>
+                            </li>
+                            <li>
+                                <a href="gallery.html">Gallery</a>
+                            </li>
+                            <li>
+                                <a href="terms.html">Terms of Use</a>
+                            </li>
+                            <li>
+                                <a href="credits.html">Credits</a>
+                            </li>
+                            <li>
+                                <a href="https://english.tau.ac.il/" id="tau-link" target="_blank">
+                                    <img src=pics/TAU_LOGO.png id="tau-logo">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="behind-nav-bar">
+        </div>
+            <div class="container" id="overview_container">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" align="justify">
+                    <h2>Introduction</h2>
+                    Shotgun high-resolution proteomics antibodies is necessary for understanding the
+                    dynamics and composition of polyclonal antibodies circulating in
+                    serum (<a href="https://doi.org/10.1021/ac4037679">Boutz, et al., 2014</a>). At steady
+                    state circulating antibodies are produced by terminally differentiated B cells but after
+                    exposure to antigen the humoral response generates a diverse antibody repertoire
+                    due to SHM and V(D)J recombination (<a href="https://doi:10.1073/pnas.1213737110">Wine, et al., 2013</a>;
+                    <a href="https://doi:10.1073/pnas.1317793111">Lavinder, et al., 2014</a>). For that reason, it is important to unveil
+                    whether the Igs encoded by the peripheral blood B cells correspond to antibodies
+                    present in circulation. Moreover, addressing questions as what are the relative
+                    concentrations of serum antigen-specific monoclonal antibodies (within the
+                    polyclonal pool), what are their repertoire features (e.g. V(D)J family usage, CDR3
+                    length etc.) is important in order to shed light on mechanisms related to the
+                    development of the immune response.
+
+                    <br><br>
+
+                    <h2>What is PASA?</h2>
+                    PASA web server is user-friendly, free and open to all users and there is no login
+                    requirement. PASA allows generating quantitative molecular measurements related
+                    to serum antibody repertoire from high-resolution proteomic data. The PASA
+                    web server is applicable for researchers at all levels that are interested in addressing
+                    basic questions related to B cell development and differentiation, as well as an
+                    application focused tool for vaccine development, immunodiagnostic discovery and
+                    monoclonal antibody engineering.
+
+                    <br><br>
+
+                    <h2>Input</h2>
+                    PASA accepts: (1) BCR-Seq data, as obtained from ASAP; (2) The raw mass spectrometry data files as
+                    obtained from LC-MS/MS; (3) As part of the advanced options,
+                    the user can specify the digestion
+                    enzyme used to proteolytically cleave the antibodies (by default, Trypsin). Instead of (2), the
+                    user can provide a file of derived peptides obtained using MaxQuant
+                    (<a href="https://doi.org/10.1038/nbt.1511">Cox & Mann, 2008</a>); (3) As part of the advanced options,
+
+                    PASA accepts proteomics spectral files in raw format (at least two technical
+                    replicates of each fraction elution/flow-through). For the integration with data derived
+                    from NGS of antibody encoding B cells the user is requested to upload V gene
+                    sequence database at the amino acid level. This database should be
+                    generated from our recently published ASAP web server (<a href="https://doi.org/10.3389/fimmu.2018.01686">Avram, et al., 2018</a>) that facilitates the analysis of
+                    sequences derived from NGS (see <a href="https://asap.tau.ac.il">http://asap.tau.ac.il</a> for more details).
+
+                    <br><br>
+                    <img src="pics/graphical_abstract.png" id="graphical_abstract">
+                    <br><br>
+
+                    <h2>Output and methodology<br></h2>
+                    <!--By far the highest diversity in antibodies occurs within the CDRH3 region-->
+                    <!--(<a href="https://doi.org/10.1016/s1074-7613(00)00006-6">Xu & Davis, 2000</a>), which is-->
+                    <!--overwhelmingly responsible for antigen recognition. The CDRH3 is thus considered-->
+                    <!--as a unique identifier of antibody clones and hence is the focus of our analysis. -->
+                    PASA is divided into two main phases. The first part utilizes the MaxQuant,
+                    a proteomic search algorithm that is used by
+                    PASA to identify the sequences of peptides derived from serum
+                    antibodies (<a href="https://doi:10.1038/nbt.1511">Cox & Mann, 2008</a>).
+                    Specifically, PASA provides: (1) a list of peptides and their intensities for each fraction
+                    (elution and flow-through), as identified by MaxQuant (el_peptides.txt and ft_peptides.txt, respectively);
+                    (2) a list of peptides that were found enriched (by default, over five-fold) in their
+                    relative intensity in the elution relative to the flow-through (filtered_peptides.txt). These
+                    peptides correspond to antibodies that are antigen-specific; (3) The mapping of each
+                    antigen-specific peptide to the BCR-Seq database. This mapping provides a correspondence between
+                    a serum antibody and an antibody clone as found in the BCR-Seq data. Specifically,
+                    each peptide in (2) is queried against all the BCR-Seq databases and classified as
+                    non_informative (if no hit was found or hits from multiple clones were detected),
+                    informative (if all hits were originated from the same CDR3 clone),
+                    and cdr3-informative (if the peptide is both informative and overlapped with the CDR3 sequence).
+                    The classification results can be found in the corresponding files (non_informative.txt,
+                    informative.txt, and cdr3_informative.txt). Lastly, the following plots are generated for the
+                    cdr3-informative peptides list:
+
+                    <ul>
+                        <li>A pie chart of the clones isotype distribution; </li>
+                        <li>A bar plot of the CDR3 lengths distribution</li>
+                        <li>A bar plot of the V subtypes usage distribution</li>
+                        <li>A bar plot of the D subtypes usage distribution</li>
+                        <li>A bar plot of the J subtypes usage distribution</li>
+                        <li>A bar plot of the VD subtypes combinations usage distribution</li>
+                        <li>A bar plot of the DJ subtypes combinations usage distribution</li>
+                        <li>A bar plot of the VJ subtypes combinations usage distribution</li>
+                        <li>A bar plot of the VDJ subtypes combinations usage distribution</li>
+                        <li>A scatter plot (per BCD-Seq database) of the proteomic intensity with
+                            respect to the BCR-seq database</li>
+                    </ul>
+
+
+                    <br><br>
+
+                    For further examples, please see <a href="gallery.html">Gallery Section</a> or submit a
+                    <a href="index_example.html">running example</a>
+
+                    <br><br><br><br><br><br>
+                    <!--<h2>References</h2>-->
+                    <!--<li><a href="https://pubs.acs.org/doi/abs/10.1021/ac4037679" target="_blank" id="ref1">Boutz, D. R. et al. Proteomic identification of monoclonal antibodies from serum. Anal. Chem. (2014). doi:10.1021/ac4037679.</a></li>-->
+                    <!--<br>-->
+                    <!--<li><a href="https://www.pnas.org/content/110/8/2993" target="_blank" id="ref2">Wine, Y. et al. Molecular deconvolution of the monoclonal antibodies that comprise the polyclonal serum response. Proc. Natl. Acad. Sci. (2013). doi:10.1073/pnas.1213737110.</a></li>-->
+                    <!--<br>-->
+                    <!--<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/24469811" target="_blank" id="ref3">Lavinder, J. J. et al. Identification and characterization of the constituent human serum antibodies elicited by vaccination. Proc. Natl. Acad. Sci. (2014). doi:10.1073/pnas.1317793111.</a></li>-->
+                    <!--<br>-->
+                    <!--<li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6077260" target="_blank" id="ref4">Avram, O. et al. ASAP - A web server for Immunoglobulin-Sequencing Analysis Pipeline. Front. Immunol. 9, 1–12 (2018)..</a></li>-->
+                    <!--<br>-->
+                    <!--<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/10933393" target="_blank" id="ref5">Xu, J. L. & Davis, M. M. Diversity in the CDR3 region of V(H) is sufficient for most antibody specificities. Immunity (2000). doi:10.1016/S1074-7613(00)00006-6.</a></li>-->
+                    <!--<br>-->
+                    <!--<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/19029910" target="_blank" id="ref6">Cox, J. & Mann, M. MaxQuant enables high peptide identification rates, individualized p.p.b.-range mass accuracies and proteome-wide protein quantification. Nat. Biotechnol. (2008). doi:10.1038/nbt.1511.</a></li>-->
+                    <!--<br>-->
+                    <!--<li><a href="https://www.ncbi.nlm.nih.gov/pubmed/24942700" target="_blank" id="ref7">Cox, J. et al. Accurate Proteome-wide Label-free Quantification by Delayed Normalization and Maximal Peptide Ratio.</a></li>-->
+                </div>
+            </div>
+        </div>
+        <nav role="navigation" class="navbar-inverse navbar-fixed-bottom ng-binding" style="color: #cccccc; text-align: center; font-family: Georgia">
+            <h4>
+                    Research Site | <a href="https://www.tau.ac.il/~talp/" target="_blank">Pupko Group</a>
+            </h4>
+        </nav>
+    </body>
+</html>
+
+
+
+
+
+
+
