@@ -60,29 +60,33 @@ function RawOrTxt() {
 
 
 function validate_read_files() {
-    var raws = [document.getElementsByName("elution_data_1")[0].value,
-        document.getElementsByName("elution_data_2")[0].value,
-        document.getElementsByName("elution_data_3")[0].value,
-        document.getElementsByName("flowthrough_data_1")[0].value,
-        document.getElementsByName("flowthrough_data_2")[0].value,
-        document.getElementsByName("flowthrough_data_3")[0].value]
-
-    var db = document.getElementsByName("database")[0].value
-
-    // for (i = 0; i < raws.length; i++){
-    //     if (!(raws[i].endsWith('raw'))) {
-    //         alert("One of the raw files is illegal. Only raw formats are allowed.");
-    //         return false;
-    //     }
-    // }
-
-    if (!(db.endsWith('fasta') || db.endsWith('gz') || db.endsWith('zip') || db.endsWith('rar') || db.endsWith('.tar.gz'))) {
-        alert("DB file is illegal. Only zip/tar.gz/fasta/rar/gz formats are allowed.");
+    if (!document.getElementsByName("db").value){
+        alert("DB files ZIP is missing!");
         return false;
     }
-
+    var peptides_txt = document.getElementById("checkbox");
+    if (peptides_txt.checked == true){
+        // peptides lists input
+        if (!document.getElementsByName("el_peptides_div").value){
+            alert("Elution peptides file is missing!");
+            return false;
+        }
+        if (!document.getElementsByName("ft_peptides_div").value){
+            alert("Flow-through peptides file is missing!");
+            return false;
+        }
+    } else {
+      // raw input
+        if (!document.getElementsByName("el_raw_div").value){
+            alert("Elution raw files ZIP is missing!");
+            return false;
+        }
+        if (!document.getElementsByName("ft_raw_div").value){
+            alert("Flow-through raw files ZIP is missing!");
+            return false;
+        }
+    }
     return true;
-
 }
 
 
