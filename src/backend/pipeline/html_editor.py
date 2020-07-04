@@ -35,7 +35,7 @@ def add_closing_html_tags(html_path, CONSTS, run_number):
     sleep(max(20, 2 * CONSTS.RELOAD_INTERVAL))
     with open(html_path) as f:
         html_content = f.read()
-    html_content = html_content.replace(CONSTS.RELOAD_TAGS, '')
+    html_content = html_content.replace(CONSTS.RELOAD_TAGS, f'<!--{CONSTS.RELOAD_TAGS}-->')
     with open(html_path, 'w') as f:
         f.write(html_content)
 
@@ -49,8 +49,9 @@ def get_str_of_table_row_with_result_links(output_dir, file_name, str_to_show_on
                                 {str_to_show_on_html}
                             </a>'''
     else: # disable link
+        logger.info(f'{output_dir}/{file_name} is not available.')
         result += f'''
-                                {str_to_show_on_html} (result is not available)'''
+                                {str_to_show_on_html} - result is not available'''
 
     result += '''
                             </td>
@@ -59,26 +60,39 @@ def get_str_of_table_row_with_result_links(output_dir, file_name, str_to_show_on
     return result
 
 
-def edit_success_html(html_path, run_number, output_dir):
-    result_figures_file_names = ['pie_chart.png',
-                                 'cdr3_length.png',
-                                 'subgroups_v.png',
-                                 'subgroups_d.png',
-                                 'subgroups_j.png',
-                                 'subgroups_vd.png',
-                                 'subgroups_vj.png',
-                                 'subgroups_dj.png',
-                                 'subgroups_vdj.png']
+def edit_success_html(html_path, run_number, output_dir, dbs_dir):
+    plots_output_dir = f'{output_dir}/figures'
 
+    genetics_vs_proteomics_raw = [f'proteomic_intensities_with_respect_to_{os.path.splitext(file)[0]}.png'
+                                  for file in sorted(os.listdir(dbs_dir))]
+
+    result_figures_file_names = ['isotype_distribution.png',
+                                 'cdr3_length.png',
+                                 'v_usage.png',
+                                 'd_usage.png',
+                                 'j_usage.png',
+                                 'vd_usage.png',
+                                 'vj_usage.png',
+                                 'dj_usage.png',
+                                 'vdj_usage.png',
+                                 *genetics_vs_proteomics_raw]
+
+    genetics_vs_proteomics_png = []
+    for file in genetics_vs_proteomics_raw:
+        file = os.path.splitext(file)[0]
+        file = file.replace('_', ' ')
+        file = file[0].upper() + file[1:]
+        genetics_vs_proteomics_png.append(f'{file} (scatter plot)')
     strs_to_show_on_html = ['Isotype distribution (pie chart)',
                             'CDR3 length distribution (bar plot)',
-                            'V subgroup distribution (bar plot)',
-                            'D subgroup distribution (bar plot)',
-                            'J subgroup distribution (bar plot)',
-                            'VD subgroup distribution (bar plot)',
-                            'VJ subgroup distribution (bar plot)',
-                            'DJ subgroup distribution (bar plot)',
-                            'VDJ subgroup distribution (bar plot)']
+                            'V usage distribution (bar plot)',
+                            'D usage distribution (bar plot)',
+                            'J usage distribution (bar plot)',
+                            'VD usage distribution (bar plot)',
+                            'VJ usage distribution (bar plot)',
+                            'DJ usage distribution (bar plot)',
+                            'VDJ usage distribution (bar plot)',
+                            *genetics_vs_proteomics_png]
 
     html_text = ''
 
@@ -99,7 +113,7 @@ def edit_success_html(html_path, run_number, output_dir):
                 <h2>RESULTS:</h2>
                 <table class="table">
                     <thead>
-                        <tr><th><h3>Quick access to selected results:</h3></th></tr>
+                        <tr><th><h3>Quick access to graphical results:</h3></th></tr>
                     </thead>
                     <tbody>
                         <h3><b><a href='{CONSTS.OUTPUT_DIR_NAME}.zip' target='_blank'>
@@ -107,7 +121,7 @@ def edit_success_html(html_path, run_number, output_dir):
                         </a></b></h3>\n\t\t\t\t\t'''
 
     for i in range(len(result_figures_file_names)):
-        html_text += get_str_of_table_row_with_result_links(f'{output_dir}/figures', result_figures_file_names[i], strs_to_show_on_html[i])
+        html_text += get_str_of_table_row_with_result_links(plots_output_dir, result_figures_file_names[i], strs_to_show_on_html[i])
 
     html_text += f'''</tbody>
                 </table>'''
@@ -116,7 +130,6 @@ def edit_success_html(html_path, run_number, output_dir):
         f.flush()
 
     add_closing_html_tags(html_path, CONSTS, run_number)
-
 
 
 def edit_failure_html(html_path, run_number, msg):
@@ -130,14 +143,14 @@ def edit_failure_html(html_path, run_number, msg):
     except FileNotFoundError:
         logger.warning(f"Couldn't find html prefix at: {html_path}")
 
-    html_text +=f'''<div class="container" style="{CONSTS.CONTAINER_STYLE}">
+    html_text += f'''<div class="container" style="{CONSTS.CONTAINER_STYLE}">
             <br><br><br>
             <h2 align="justify">
             {CONSTS.WEBSERVER_NAME.upper()} failed due to the following reason:<br>
             <font color="red">{msg}</font><br><br>
             </h2>
             <h4>
-            Please try to re-run your job after careful verification of the input data or <a href="mailto:{CONSTS.ADMIN_EMAIL}?subject={CONSTS.WEBSERVER_NAME.upper()}%20Run%20Number:%20{run_number}">contact us</a> for further information
+            Please try to re-run your job after careful verification of your input or <a href="mailto:{CONSTS.ADMIN_EMAIL}?subject={CONSTS.WEBSERVER_NAME.upper()}%20Run%20Number:%20{run_number}">contact us</a> for further information
             </h4>
             <br><br>'''
 
@@ -145,7 +158,7 @@ def edit_failure_html(html_path, run_number, msg):
         f.write(html_text)
         f.flush()
 
-    logger.warning(f'{CONSTS.WEBSERVER_NAME.upper()} failed fdue to the following reason:{msg}')
+    logger.warning(f'{CONSTS.WEBSERVER_NAME.upper()} failed due to the following reason: {msg}')
 
     add_closing_html_tags(html_path, CONSTS, run_number)
 
