@@ -1,6 +1,11 @@
+from auxiliaries import edit_progress
+
 def prepare(wd_path):
 
     import os
+    import sys
+    sys.path.insert(0, '/bioseq/pasa/')
+    from CONSTANTS import RELOAD_TAGS, RESULT_WEBPAGE_NAME
     error_file = os.path.join(wd_path, 'error.txt')
     try:
         os.remove(error_file)
@@ -8,7 +13,7 @@ def prepare(wd_path):
     except:
         print(f'No {error_file} file to delete was found.')
 
-    html_path = os.path.join(wd_path, CONSTS.RESULT_WEBPAGE_NAME)
+    html_path = os.path.join(wd_path, RESULT_WEBPAGE_NAME)
     with open(html_path) as f:
         html_content = ''
         for line in f:
@@ -16,18 +21,17 @@ def prepare(wd_path):
             if line.startswith('<!--result-->'):
                 break
 
-    import sys
-    sys.path.insert(0, '/bioseq/pasa/')
-    from CONSTANTS import RELOAD_TAGS
     html_content = html_content.replace('FAILED', 'RUNNING')
     html_content = html_content.replace('FINISHED', 'RUNNING')
     html_content = html_content.replace('progress-bar-striped', 'progress-bar-striped active')
     while f'<!--{RELOAD_TAGS}-->' in html_content:
+        # maybe there is a double comment etc.. <!--<!--RELOAD_TAGS-->-->
         html_content = html_content.replace(f'<!--{RELOAD_TAGS}-->', RELOAD_TAGS)
 
     with open(html_path, 'w') as f:
         f.write(html_content)
 
+    edit_progress(html_path, progress=1)
     print(f'{html_path} was reverted!')
 
 
