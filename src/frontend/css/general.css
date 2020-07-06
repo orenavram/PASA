@@ -19,8 +19,8 @@ html{
 }
 
 #antibody_image{
-    width: 100%;
-    height: 100%;
+    width: 67.5px;
+    height: 65.516px;
 }
 
 #pasa-title{
@@ -37,8 +37,9 @@ html{
 
 #nav_container{
     font-family: 'Georgia';
-    font-size: 26px;
-    line-height: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 30px;
 }
 
 #PASA_form{
@@ -129,11 +130,6 @@ td h3{
 .col-md-10{
     font-size: 20px;
     margin-top: 0px;
-}
-
-.col-md-8{
-    font-size: 22px;
-    font-weight: bold;
 }
 
 .column {
