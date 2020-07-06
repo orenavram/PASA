@@ -60,28 +60,28 @@ function RawOrTxt() {
 
 
 function validate_read_files() {
-    if (!document.getElementsByName("db").value){
+    if (!document.getElementById("db").value){
         alert("DB files ZIP is missing!");
         return false;
     }
     var peptides_txt = document.getElementById("checkbox");
     if (peptides_txt.checked == true){
         // peptides lists input
-        if (!document.getElementsByName("el_peptides_div").value){
+        if (!document.getElementById("el_peptides").value){
             alert("Elution peptides file is missing!");
             return false;
         }
-        if (!document.getElementsByName("ft_peptides_div").value){
+        if (!document.getElementById("ft_peptides").value){
             alert("Flow-through peptides file is missing!");
             return false;
         }
     } else {
       // raw input
-        if (!document.getElementsByName("el_raw_div").value){
+        if (!document.getElementById("el").value){
             alert("Elution raw files ZIP is missing!");
             return false;
         }
-        if (!document.getElementsByName("ft_raw_div").value){
+        if (!document.getElementById("ft").value){
             alert("Flow-through raw files ZIP is missing!");
             return false;
         }
