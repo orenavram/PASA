@@ -17,9 +17,16 @@ def prepare_dbs(wd, raw_dbs_path):
     for db in os.listdir(maxquant_dbs_path):
         db_path = f'{maxquant_dbs_path}/{db}'
         logger.info(f'Preparing {db_path} for MaxQuant analysis...')
-        if not db_path.endswith('fasta'):
-            logger.info(f'Removing this file from MaxQuant DBs path (not in a fasta format):\n{db_path}')
-            shutil.rmtree(db_path)
+        # ASAP originaly returned "fatsa" files... (it was fixed in ASAP but there are still "fatsa" files out there..)
+        if not db_path.endswith('fasta') and not db_path.endswith('fatsa'):
+            logger.info(f'Removing the following file from MaxQuant DBs path (not in a fasta format):\n{db_path}')
+            try:
+                if os.path.isdir(db_path):
+                    shutil.rmtree(db_path)
+                else:
+                    os.remove(db_path)
+            except:
+                raise OSError(f'Illegal file was detected: {db}')
             return
 
         with open(db_path) as f:
@@ -99,7 +106,9 @@ def run_maxquant(pasa_dbs_path, enzymes, data_type, job_id,
 
     logger.info(f'Running MaxQuant for {data_type}')
 
-    raw_paths = [f'{maxquant_current_analysis_path}/{raw_name}' for raw_name in sorted(os.listdir(maxquant_current_analysis_path))]
+    raw_paths = [f'{maxquant_current_analysis_path}/{raw_name}' for raw_name in
+                 sorted(os.listdir(maxquant_current_analysis_path)) if raw_name.endswith('raw')]
+
     logger.info(f'Raw files detected are:\n' + '\n'.join(raw_paths))
     assert len(raw_paths)
 
