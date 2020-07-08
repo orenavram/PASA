@@ -26,10 +26,10 @@ def wait_for_maxquant(maxquant_wd, time_passed=0, sleeping_time=5, html_path='',
     while True:
         sleep(sleeping_time)
         if html_path:
-            # b'  54 maxquant_analysis/el/combined/proc/#runningTimes.txt\n  54 maxquant_analysis/ft/combined/proc/#runningTimes.txt\n 108 total\n'
-            total_steps_done = sum(int(x) for x in subprocess.check_output(f'wc -l {maxquant_wd}/../*/combined/proc/#runningTimes.txt',
-                                                                           shell=True).decode().rstrip().split()[:3][::2])
             try:
+                # b'  54 maxquant_analysis/el/combined/proc/#runningTimes.txt\n  54 maxquant_analysis/ft/combined/proc/#runningTimes.txt\n 108 total\n'
+                total_steps_done = sum(int(x) for x in subprocess.check_output(f'wc -l {maxquant_wd}/../*/combined/proc/#runningTimes.txt',
+                                                                               shell=True).decode().rstrip().split()[:3][::2])
                 # "#runningTimes.txt" file contains 54 rows when it's done. 2 files contains 108...
                 edit_progress(html_path, progress=total_bar_for_maxquant * total_steps_done / 108 + initial_shift)
             except:
