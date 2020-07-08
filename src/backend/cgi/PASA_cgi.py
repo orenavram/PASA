@@ -376,12 +376,12 @@ def notify_user(job_title, database_file_name,
                 el_peptides_file_name, ft_peptides_file_name,
                 digestion_enzyme, enrichment_threshold, run_number, user_email):
     job_name = f'Job title: {job_title}\n' if job_title else ''
-    notification_content = f'Your submission details are:\n\n{job_name}\nBCR-Seq dataset: {database_file_name}\n'
+    notification_content = f'Your submission details are:\n\n{job_name}BCR-Seq dataset: {database_file_name}\n'
 
     if el_peptides_file_name != None:
         notification_content += f'Elution peptides list: {el_peptides_file_name}\nFlow-through peptides list: {ft_peptides_file_name}'
     else:
-        notification_content += f'Elution raw dataset: {elution_file_name}\nFlow-through raw dataset: {flowthrough_file_name}'
+        notification_content += f'Elution raw dataset: {elution_file_name}\nFlow-through raw dataset: {flowthrough_file_name}\n'
 
     notification_content += f'Digestion enzyme: {digestion_enzyme}\nMin enrichment ratio: {enrichment_threshold}\n\n'
 
