@@ -56,7 +56,7 @@ def write_html_prefix(output_path, run_number):
                         <div class="col-md-1">
                             <img src="{CONSTS.WEBSERVER_URL}/pics/logo.png" id="antibody_image" class="img-rounded">
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-10">
                             <span id="pasa-title">PASA</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="sub-title"><b>Proteomics Analysis of Serum Antibodies </b></span><br>
                         </div>
                     </div>
@@ -67,7 +67,7 @@ def write_html_prefix(output_path, run_number):
         </div>
         <br><br>
         <div class="container" style="font-size: 17px; {CONSTS.CONTAINER_STYLE}"  align="justify"> 
-            <H1 align=center>Job status: <FONT color='red'>RUNNING</FONT></h1>
+            <H1 align=center>Job status: <FONT color='red'>QUEUED</FONT></h1>
             <br>
             {CONSTS.PROGRESS_BAR_TAG}
             {CONSTS.WEBSERVER_NAME.upper()} is now processing your request. This page will be automatically updated every few seconds (until the job is done). You can also reload it manually. Once the job has finished, the output will appear below. A link to this page was sent to your email in case you wish to view these results at a later time without recalculating them. Please note that the results will be kept in the server for 3 months.
@@ -83,37 +83,38 @@ def append_running_parameters_to_html(output_html_path, elution_file_name, flowt
     with open(output_html_path, 'a') as output_path_f:
         output_path_f.write(f'<div class="container" style="{CONSTS.CONTAINER_STYLE}">\n')
 
-        # optional params rows
+        # optional param row
         if job_title != '':
             output_path_f.write('<div class="row" style="font-size: 20px;"><div class="col-md-12">\n')
             output_path_f.write(f'<b>Job title: </b>{job_title}\n')
             output_path_f.write('</div></div>\n')
 
+        # mandatory param row
+        output_path_f.write('<div class="row" style="font-size: 20px;"><div class="col-md-12">\n')
+        output_path_f.write(f'<b>BCR-Seq dataset: </b>{database_name}\n')
+        output_path_f.write('</div></div>\n')
+
         if el_peptides_file_name != None:
             output_path_f.write('<div class="row" style="font-size: 20px;"><div class="col-md-12">\n')
-            output_path_f.write(f'<b>Peptides file: </b>{el_peptides_file_name}\n')
+            output_path_f.write(f'<b>Elution peptides list: </b>{el_peptides_file_name}\n')
             output_path_f.write('</div></div>\n')
             output_path_f.write('<div class="row" style="font-size: 20px;"><div class="col-md-12">\n')
-            output_path_f.write(f'<b>Peptides file: </b>{ft_peptides_file_name}\n')
+            output_path_f.write(f'<b>Flow-through peptides list: </b>{ft_peptides_file_name}\n')
             output_path_f.write('</div></div>\n')
         else:
             output_path_f.write('<div class="row" style="font-size: 20px;"><div class="col-md-12">\n')
-            output_path_f.write(f'<b>Elution file: </b>{elution_file_name}\n')
+            output_path_f.write(f'<b>Elution raw dataset: </b>{elution_file_name}\n')
             output_path_f.write('</div></div>\n')
 
             output_path_f.write('<div class="row" style="font-size: 20px;"><div class="col-md-12">\n')
-            output_path_f.write(f'<b>Flow-through file: </b>{flowthrough_file_name}\n')
+            output_path_f.write(f'<b>Flow-through raw dataset: </b>{flowthrough_file_name}\n')
             output_path_f.write('</div></div>\n')
 
             output_path_f.write('<div class="row" style="font-size: 20px;"><div class="col-md-12">\n')
             output_path_f.write(f'<b>Digestion enzyme: </b>{digestion_enzymes}\n')
             output_path_f.write('</div></div>\n')
 
-        # regular params rows
-        output_path_f.write('<div class="row" style="font-size: 20px;"><div class="col-md-12">\n')
-        output_path_f.write(f'<b>DB name: </b>{database_name}\n')
-        output_path_f.write('</div></div>\n')
-
+        # mandatory param row
         output_path_f.write('<div class="row" style="font-size: 20px;"><div class="col-md-12">\n')
         output_path_f.write(f'<b>Min enrichment ratio: </b>{enrichment_threshold}\n')
         output_path_f.write('</div></div>\n')
@@ -144,11 +145,11 @@ def save_file_to_disk(cgi_debug_path_f, form, wd, file_type):
 
     file_name = form[file_type].filename
     write_to_debug_file(cgi_debug_path_f, f'file name is:\n{file_name}')
-    data = form[file_type].value
-    write_to_debug_file(cgi_debug_path_f, f'{file_name} first 100 chars are: {data[:100]}\n')
+    # data = form[file_type].value
+    write_to_debug_file(cgi_debug_path_f, f'{file_name} first 100 chars are: {form[file_type].value[:100]}\n')
     data_path = os.path.join(f'{wd}/{file_type}{os.path.splitext(file_name)[-1]}')
     with open(data_path, 'wb') as data_f:
-        data_f.write(data)
+        data_f.write(form[file_type].value)
     write_to_debug_file(cgi_debug_path_f, f'Uploaded data was saved to {data_path} successfully\n')
     return data_path, file_name
 
@@ -229,24 +230,20 @@ def run_cgi():
         el_peptides_file_name = None
         ft_peptides_file_name = None
         digestion_enzyme = None
-        maxquant_analysis_is_needed = None
+        maxquant_analysis_is_needed = True
         if form['example_page'].value == 'yes':  # example data
             write_to_debug_file(cgi_debug_path_f, f'Linking example data FROM {CONSTS.EXAMPLE_DATA_PATH} TO {wd}\n')
             copy_example_data(wd, cgi_debug_path_f)
             database_file_name = CONSTS.EXAMPLE_DB_NAME
             elution_file_name = 'Elution example data'  # CONSTS.ELUTION_FILE_NAMES
             flowthrough_file_name = 'Flow-through example data'  # CONSTS.FLOWTHROUGH_FILE_NAMES
-            # dbs_zip = f'{wd}/{CONSTS.EXAMPLE_DB_NAME}'
             digestion_enzyme = 'Trypsin'  # TODO: check what is recieved when sending several values
             enrichment_threshold = 5
-            maxquant_analysis_is_needed = True
         else:
             write_to_debug_file(cgi_debug_path_f, f'\n{"#"*80}\nuploading data\n')
             database_file_path, database_file_name = save_file_to_disk(cgi_debug_path_f, form, wd, 'db')
-            # dbs_zip = f'{wd}/{database_file_name}'
             enrichment_threshold = form['enrichment_threshold'].value.strip()
             if 'el' in form and form['el'].filename != '':
-                maxquant_analysis_is_needed = True
                 elution_file_path, elution_file_name = save_file_to_disk(cgi_debug_path_f, form, wd, 'el')
                 flowthrough_file_path, flowthrough_file_name = save_file_to_disk(cgi_debug_path_f, form, wd, 'ft')
                 digestion_enzyme = form['enzyme'].value.strip()  # TODO: check what is recieved when sending several values
@@ -284,7 +281,7 @@ def run_cgi():
         # submission_cmd = f'ssh bioseq@powerlogin "module load python/python-3.6.7; python /bioseq/bioSequence_scripts_and_constants/q_submitter_power.py {cmds_file} {wd} -q {queue_name} --verbose > {log_file}"'
 
         # a simple command when using shebang header in q_submitter_power.py
-        submission_cmd = f'{CONSTS.Q_SUBMITTER_SCRIPT} {cmds_file} {wd} -q pupkotmpr --verbose > {log_file}'
+        submission_cmd = f'{CONSTS.Q_SUBMITTER_SCRIPT} {cmds_file} {wd} -q pupkolabr --verbose > {log_file}'
 
 
         if not page_is_ready:
@@ -297,6 +294,16 @@ def run_cgi():
         if user_email != '':
             with open(user_email_file, 'w') as email_f:
                 email_f.write(f'{user_email}\n')
+
+            try:
+                # Send the user a notification email for their submission
+                notify_user(job_title, database_file_name,
+                            elution_file_name, flowthrough_file_name,
+                            el_peptides_file_name, ft_peptides_file_name,
+                            digestion_enzyme, enrichment_threshold, run_number, user_email)
+            except:
+                write_to_debug_file(cgi_debug_path_f, f'\nFailed sending notification to {user_email}\n')
+
         else:
             try:
                 os.remove(user_email_file)      #for example mode
@@ -313,6 +320,13 @@ def run_cgi():
             except OSError:
                 pass
 
+        write_to_debug_file(cgi_debug_path_f, f'\n\nUpdating status from QUEUED to RUNNING\n')
+        with open(output_html_path) as f:
+            html_content = f.read()
+        html_content = html_content.replace('QUEUED', 'RUNNING')
+        with open(output_html_path, 'w') as f:
+            f.write(html_content)
+
         write_to_debug_file(cgi_debug_path_f, f'\n\n{"#"*50}\nCGI finished running!\n{"#"*50}\n')
 
         cgi_debug_path_f.close()
@@ -323,7 +337,7 @@ def run_cgi():
         msg = 'CGI crashed before the job was submitted :('
         with open(output_html_path) as f:
             html_content = f.read()
-        html_content = html_content.replace('RUNNING', 'FAILED')
+        html_content = html_content.replace('QUEUED', 'FAILED').replace('RUNNING', 'FAILED')
         html_content += f'<br><br><br><center><h2><font color="red">{msg}</font><br><br>Please try to re-run your job or <a href="mailto:{CONSTS.ADMIN_EMAIL}?subject={CONSTS.WEBSERVER_NAME.upper()}%20Run%20Number%20{run_number}">contact us</a> for further information</h2></center><br><br>\n</body>\n</html>\n'
         with open(output_html_path, 'w') as f:
             f.write(html_content)
@@ -355,6 +369,30 @@ def run_cgi():
         html_content = html_content.replace(CONSTS.RELOAD_TAGS, f'<!--{CONSTS.RELOAD_TAGS}-->')
         with open(output_html_path, 'w') as f:
             f.write(html_content)
+
+
+def notify_user(job_title, database_file_name,
+                elution_file_name, flowthrough_file_name,
+                el_peptides_file_name, ft_peptides_file_name,
+                digestion_enzyme, enrichment_threshold, run_number, user_email):
+    job_name = f'Job title: {job_title}\n' if job_title else ''
+    notification_content = f'Your submission details are:\n\n{job_name}\nBCR-Seq dataset: {database_file_name}\n'
+
+    if el_peptides_file_name != None:
+        notification_content += f'Elution peptides list: {el_peptides_file_name}\nFlow-through peptides list: {ft_peptides_file_name}'
+    else:
+        notification_content += f'Elution raw dataset: {elution_file_name}\nFlow-through raw dataset: {flowthrough_file_name}'
+
+    notification_content += f'Digestion enzyme: {digestion_enzyme}\nMin enrichment ratio: {enrichment_threshold}\n\n'
+
+    notification_content += f'Once the analysis will be ready, we will let you know! Meanwhile, you can track the ' \
+        f'progress of your job at:\n{CONSTS.WEBSERVER_URL}/results/{run_number}/{CONSTS.RESULT_WEBPAGE_NAME}\n\n'
+
+    send_email(smtp_server=CONSTS.SMTP_SERVER,
+               sender=CONSTS.ADMIN_EMAIL,
+               receiver=f'{user_email}',
+               subject=f'{CONSTS.WEBSERVER_NAME.upper()} - your job has been submitted! (Run number: {run_number})',
+               content=notification_content)
 
 
 def copy_example_data(target_dir, cgi_debug_path_f):
