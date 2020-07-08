@@ -83,14 +83,16 @@
                     <form id="PASA_form" action="https://pasa.tau.ac.il/cgi-bin/PASA_cgi.py" method="post" ENCTYPE="multipart/form-data" target="_blank">
                         <div class="container" id="basic">
                             <div class="form-group">
-                                <b>DB files:</b><br>
+                                <b>BCR-Seq DB:</b><br>
                                 <label class="btn btn-default btn-file">
                                     <a href="example/dbs.zip" target="_blank">dbs.zip</a>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <b> Data type:</b><br>
-                                <input disabled type="checkbox" id="checkbox" name="checkbox" data-toggle="toggle" data-on="Peptides (text) files" data-off="Mass-Spec (raw) files" onchange="RawOrTxt()" data-width="250" data-onstyle="default" data-offstyle="primary">
+                                <label>
+                                    <input disabled type="checkbox" id="checkbox" name="checkbox" data-toggle="toggle" data-on="Peptides (text) files" data-off="Mass-Spec (raw) files" onchange="RawOrTxt()" data-width="250" data-onstyle="default" data-offstyle="primary">
+                                </label>
                             </div>
                             <div class="form-group" id="el_raw_div">
                                 <b> Elution raw data:</b><br>
