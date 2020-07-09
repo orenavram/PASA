@@ -100,10 +100,10 @@ def filter_peptides(el_path, ft_path, output_dir, min_fold=5):
         # notice that ft_relative_intensity might be zero so be careful with divisions here...
         if el_relative_intensity > min_fold * ft_relative_intensity:
             filtered_peptides_info.append([peptide,
-                                           str(el_peptides_to_intensity[peptide]),
-                                           str(ft_peptides_to_intensity.get(peptide, 0)),
-                                           str(el_peptides_to_relative_intensity[peptide]),
-                                           str(ft_peptides_to_relative_intensity.get(peptide, 0))])
+                                           el_peptides_to_intensity[peptide],
+                                           ft_peptides_to_intensity.get(peptide, 0),
+                                           el_peptides_to_relative_intensity[peptide],
+                                           ft_peptides_to_relative_intensity.get(peptide, 0)])
         else:
             junk_peptides_info.append([peptide,
                                        str(el_peptides_to_intensity[peptide]),
@@ -111,17 +111,17 @@ def filter_peptides(el_path, ft_path, output_dir, min_fold=5):
                                        str(el_peptides_to_relative_intensity[peptide]),
                                        str(ft_peptides_to_relative_intensity.get(peptide, 0))])
 
-    filtered_peptides_path = f'{output_dir}/filtered_peptides.txt'
+    filtered_peptides_path = f'{output_dir}/filtered_peptides.csv'
     with open(filtered_peptides_path, 'w') as f:
-        f.write('Peptide_name\tAverage_intensity_elution\tAverage_intensity_flowthrough\tAverage frequency_elution\tAverage frequency_flowthrough\n')
+        f.write('Peptide_name,Average_intensity_elution,Average_intensity_flowthrough,Average frequency_elution,Average frequency_flowthrough\n')
         for element in filtered_peptides_info:
-            f.write('\t'.join(element) + '\n')
+            f.write(','.join([str(x) for x in element]) + '\n')
 
-    junk_peptides_path = f'{output_dir}/junk_peptides.txt'
+    junk_peptides_path = f'{output_dir}/non_enriched_elution_peptides.csv'
     with open(junk_peptides_path, 'w') as f:
-        f.write('Peptide_name\tAverage_intensity_elution\tAverage_intensity_flowthrough\tAverage frequency_elution\tAverage frequency_flowthrough\n')
+        f.write('Peptide_name,Average_intensity_elution,Average_intensity_flowthrough,Average frequency_elution,Average frequency_flowthrough\n')
         for element in junk_peptides_info:
-            f.write('\t'.join(element) + '\n')
+            f.write(','.join([str(x) for x in element]) + '\n')
 
     return filtered_peptides_info
 
