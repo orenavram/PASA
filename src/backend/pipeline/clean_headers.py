@@ -1,15 +1,17 @@
 import os
-dbs_dir = '/Users/Oren/Dropbox/Projects/PASA/data/tmp'
+dbs_dir = '/Users/Oren/Dropbox/Projects/PASA/data/aya_dbs_trimmed_header'
 
 for file in os.listdir(dbs_dir):
-    if not file.endswith('fasta'):
+    if not file.endswith('fatsa'):
         continue
-    cleaned_headers = ''
     with open(f'{dbs_dir}/{file}') as f:
-        cleaned_headers = f.readline()
+        i = 1
+        cleaned_headers = f.readline().split('|')[0].rstrip() + f'_{i}\n'
         for line in f:
             if line.startswith('>'):
-                cleaned_headers += '\n' + line  # .split('|')[0].rstrip() + '\n'
+                i += 1
+                cleaned_headers += '\n' + line.split('|')[0].rstrip() + f'_{i}\n'
+
             else:
                 cleaned_headers += line.rstrip()
 
