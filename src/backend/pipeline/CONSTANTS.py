@@ -25,6 +25,7 @@ WEBSERVER_RESULTS_URL = os.path.join(WEBSERVER_URL, 'results')
 
 Q_SUBMITTER_SCRIPT = '/bioseq/bioSequence_scripts_and_constants/q_submitter_power.py'
 MAIN_SCRIPT = os.path.join(f'{WEBSERVER_PROJECT_PATH}/pipeline/main.py')
+SUBMISSIONS_LOG = os.path.join(f'{WEBSERVER_PROJECT_PATH}/submissions_log.txt')
 
 OUTPUT_DIR_NAME = 'outputs'
 RESULT_WEBPAGE_NAME = 'results.html'

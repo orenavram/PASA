@@ -206,9 +206,9 @@ def run_cgi():
         write_to_debug_file(cgi_debug_path_f, f'{"#" * 100}\n{ctime()}: A new CGI request has been received!\n')
 
         # extract form's values:
-        user_email = ''
+        email = ''
         if 'email' in form and form['email'].value != '':
-            user_email = form['email'].value.strip()
+            email = form['email'].value.strip()
 
         # Send me a notification email every time there's a new request
         send_email(smtp_server=CONSTS.SMTP_SERVER,
@@ -217,7 +217,7 @@ def run_cgi():
                    subject=f'{CONSTS.WEBSERVER_NAME.upper()} - A new job has been submitted: {run_number}',
                    content=f'{os.path.join(CONSTS.WEBSERVER_URL, "results", run_number, "cgi_debug.txt")}\n'
                    f'{os.path.join(CONSTS.WEBSERVER_URL, "results", run_number, CONSTS.RESULT_WEBPAGE_NAME)}\n'
-                   f'{user_email if user_email else "NO EMAIL"}')
+                   f'{email if email else "NO EMAIL"}')
 
         peek_form(cgi_debug_path_f, form)
 
@@ -291,18 +291,18 @@ def run_cgi():
             write_to_debug_file(cgi_debug_path_f, f'\nPage already exists! no need to run the analysis again\n')
 
         user_email_file = os.path.join(wd, 'user_email.txt')
-        if user_email != '':
+        if email != '':
             with open(user_email_file, 'w') as email_f:
-                email_f.write(f'{user_email}\n')
+                email_f.write(f'{email}\n')
 
             try:
                 # Send the user a notification email for their submission
                 notify_user(job_title, database_file_name,
                             elution_file_name, flowthrough_file_name,
                             el_peptides_file_name, ft_peptides_file_name,
-                            digestion_enzyme, enrichment_threshold, run_number, user_email)
+                            digestion_enzyme, enrichment_threshold, run_number, email)
             except:
-                write_to_debug_file(cgi_debug_path_f, f'\nFailed sending notification to {user_email}\n')
+                write_to_debug_file(cgi_debug_path_f, f'\nFailed sending notification to {email}\n')
 
         else:
             try:
@@ -370,11 +370,18 @@ def run_cgi():
         with open(output_html_path, 'w') as f:
             f.write(html_content)
 
+    # logging submission
+    with open(CONSTS.SUBMISSIONS_LOG, 'a') as f:
+        f.write(f'{email}\t{run_number}\t{ctime()}\n')
+
+    with open(cgi_debug_path, 'a') as f:  # for cgi debugging
+        f.write(f'{ctime()}: Submission was documented in \n')
+
 
 def notify_user(job_title, database_file_name,
                 elution_file_name, flowthrough_file_name,
                 el_peptides_file_name, ft_peptides_file_name,
-                digestion_enzyme, enrichment_threshold, run_number, user_email):
+                digestion_enzyme, enrichment_threshold, run_number, email):
     job_name = f'Job title: {job_title}\n' if job_title else ''
     notification_content = f'Your submission details are:\n\n{job_name}BCR-Seq dataset: {database_file_name}\n'
 
@@ -390,7 +397,7 @@ def notify_user(job_title, database_file_name,
 
     send_email(smtp_server=CONSTS.SMTP_SERVER,
                sender=CONSTS.ADMIN_EMAIL,
-               receiver=f'{user_email}',
+               receiver=f'{email}',
                subject=f'{CONSTS.WEBSERVER_NAME.upper()} - your job has been submitted! (Run number: {run_number})',
                content=notification_content)
 
