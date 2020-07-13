@@ -174,8 +174,9 @@ def run_cgi():
     form = cgi.FieldStorage()  # extract POSTed object
 
     # random_chars = "".join(choice(string.ascii_letters + string.digits) for x in range(20))
-    run_number = str(round(time())) + str(randint(10 ** 19, 10 ** 20 - 1))  # adding 20 random digits to prevent users see data that are not their's
-    run_number = str(randint(1, 10 ** 6 - 1))  # adding 20 random digits to prevent users see data that are not their's
+    # adding 20 random digits to prevent users guess a number and see data that are not their's
+    run_number = str(round(time())) + str(randint(10 ** 19, 10 ** 20 - 1))
+    # run_number = str(randint(1, 10 ** 6 - 1))
     if form['example_page'].value == 'yes':
         run_number = 'example'
 
