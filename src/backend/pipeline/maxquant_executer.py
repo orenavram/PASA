@@ -30,14 +30,16 @@ def prepare_dbs(wd, raw_dbs_path):
             return
 
         with open(db_path) as f:
-            cleaned_headers = f.readline()  # header
+            i = 1
+            cleaned_headers = f.readline().split('|')[0].rstrip() + f'_{i}\n'  # first header
             for line in f:
-                if not line.startswith('>'):
+                if line.startswith('>'):
                     # accumulate sequence rows until a header was detected
-                    cleaned_headers += line.rstrip()
+                    i += 1
+                    cleaned_headers += '\n' + line.split('|')[0].rstrip() + f'_{i}\n'
                 else:
                     # a header was found. Don't forget new line for the previous sequence...
-                    cleaned_headers += '\n' + line
+                    cleaned_headers += line.rstrip()
                     # cleaned_headers += '\n' + line.split('|')[0].rstrip() + '\n'
             cleaned_headers += '\n'
 
@@ -128,7 +130,7 @@ def run_maxquant(pasa_dbs_path, enzymes, data_type, job_id,
         f.write('\t')
         f.write(f'mq_{data_type}_{job_id}')
 
-    cmd = f'{CONSTS.Q_SUBMITTER_SCRIPT} {cmds_file} {maxquant_current_analysis_path} -q pupkotmpr --cpu {num_of_threads}'
+    cmd = f'{CONSTS.Q_SUBMITTER_SCRIPT} {cmds_file} {maxquant_current_analysis_path} -q pupkor --cpu {num_of_threads}'
     logger.info(f'Starting MaxQuant. Calling:\n{cmd}')
     subprocess.run(cmd, shell=True)
 
