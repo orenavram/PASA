@@ -179,8 +179,8 @@ def main(wd, min_fold, maxquant_analysis_is_needed, enzymes):
     logger.info('Editing success html...')
     edit_success_html(html_path, run_number, output_dir, dbs_dir)
 
-    if os.path.exists(f'{wd}/user_email.txt'):
-        with open(f'{wd}/user_email.txt') as f:
+    if os.path.exists(f'{wd}/{CONSTS.EMAIL_FILE_NAME}'):
+        with open(f'{wd}/{CONSTS.EMAIL_FILE_NAME}') as f:
             email = f.read().rstrip()
         notify_user('is ready', email, run_number, start_time, time())
 

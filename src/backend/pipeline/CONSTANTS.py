@@ -29,6 +29,7 @@ SUBMISSIONS_LOG = os.path.join(f'{WEBSERVER_PROJECT_PATH}/submissions_log.txt')
 
 OUTPUT_DIR_NAME = 'outputs'
 RESULT_WEBPAGE_NAME = 'results.html'
+EMAIL_FILE_NAME = 'email.txt'
 
 #path to example data
 EXAMPLE_DATA_PATH = f'{WEBSERVER_PROJECT_PATH}/example_data'

@@ -291,7 +291,7 @@ def run_cgi():
         else:
             write_to_debug_file(cgi_debug_path_f, f'\nPage already exists! no need to run the analysis again\n')
 
-        user_email_file = os.path.join(wd, 'user_email.txt')
+        user_email_file = os.path.join(wd, CONSTS.EMAIL_FILE_NAME)
         if email != '':
             with open(user_email_file, 'w') as email_f:
                 email_f.write(f'{email}\n')
