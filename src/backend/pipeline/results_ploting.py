@@ -43,7 +43,8 @@ def generate_pie_chart(data_path, out_path, token_number):
     isotypes = [isotypes[i] for i in range(len(isotypes)) if portions[i] != 0]
     labels = [f'{isotypes[i]} ({portions_percents[i]:.3f}%)' for i in range(len(portions_percents))]
 
-    patches, texts = plt.pie(portions_percents, counterclock=False)
+    patches, texts = plt.pie(portions_percents, colors=sns.color_palette('colorblind'), counterclock=False)
+
     plt.legend(patches, labels, loc="best")
     # plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
@@ -193,7 +194,7 @@ def plot_results(textual_output_path, output_dir):
 
 
 # generate_pie_chart('/Users/Oren/Dropbox/Projects/PASA/linux_outputs/outputs/text/informative.csv',
-                   # '/Users/Oren/Dropbox/Projects/PASA/linux_outputs/pie_chart.png')
+#                    '/Users/Oren/Dropbox/Projects/PASA/linux_outputs/colorblind_pie_chart.png', [6])
 
 # plot_barplot('/Users/Oren/Dropbox/Projects/PASA/linux_outputs/outputs/text/informative.csv',
 #              '/Users/Oren/Dropbox/Projects/PASA/linux_outputs/cdr3_length.png',
