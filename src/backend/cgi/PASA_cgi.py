@@ -275,15 +275,11 @@ def run_cgi():
             parameters += f' --enzymes {form["enzyme"].value} -mq'
 
         cmds_file = os.path.join(wd, 'qsub.cmds')
-        log_file = cmds_file.replace('cmds', 'log')
         write_cmds_file(cmds_file, parameters, run_number)
 
-        # a complex command with more than one operation (ssh + module load + python q_submitter.py)
-        # submission_cmd = f'ssh bioseq@powerlogin "module load python/python-3.6.7; python /bioseq/bioSequence_scripts_and_constants/q_submitter_power.py {cmds_file} {wd} -q {queue_name} --verbose > {log_file}"'
+        job_id_file = os.path.join(wd, 'job_id.txt')
 
-        # a simple command when using shebang header in q_submitter_power.py
-        submission_cmd = f'{CONSTS.Q_SUBMITTER_SCRIPT} {cmds_file} {wd} -q pupkolabr --verbose > {log_file}'
-
+        submission_cmd = f'{CONSTS.Q_SUBMITTER_SCRIPT} {cmds_file} {wd} -q pupkowebr --verbose > {job_id_file}'
 
         if not page_is_ready:
             write_to_debug_file(cgi_debug_path_f, f'\nSUBMITTING JOB TO QUEUE:\n{submission_cmd}\n')
@@ -320,13 +316,6 @@ def run_cgi():
                 os.remove(job_title_file)      #for example mode
             except OSError:
                 pass
-
-        write_to_debug_file(cgi_debug_path_f, f'\n\nUpdating status from QUEUED to RUNNING\n')
-        with open(output_html_path) as f:
-            html_content = f.read()
-        html_content = html_content.replace('QUEUED', 'RUNNING')
-        with open(output_html_path, 'w') as f:
-            f.write(html_content)
 
         write_to_debug_file(cgi_debug_path_f, f'\n\n{"#"*50}\nCGI finished running!\n{"#"*50}\n')
 
