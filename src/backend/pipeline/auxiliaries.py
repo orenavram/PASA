@@ -68,4 +68,14 @@ def edit_progress(html_path, progress=None, active=True):
         f.write(result)
 
     # TODO: uncomment in production
-    # sleep(3)
+    sleep(3)
+
+
+def update_html(html_path, src, dst):
+    # The initial file exists (generate by the cgi) so we can read and parse it.
+    with open(html_path) as f:
+        html_content = f.read()
+    html_content = html_content.replace(src, dst)
+    with open(html_path, 'w') as f:
+        f.write(html_content)
+
