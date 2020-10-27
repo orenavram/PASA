@@ -265,12 +265,7 @@ def run_cgi():
 
         write_to_debug_file(cgi_debug_path_f, f'{ctime()}: Running parameters were written to html successfully.\n')
 
-        # write_to_debug_file(cgi_debug_path_f, '$$$$$$$')
-        # write_to_debug_file(cgi_debug_path_f, f'wd: {wd}')
-        # write_to_debug_file(cgi_debug_path_f, f'enrichment_threshold: {enrichment_threshold}')
         parameters = f'{wd} --min-fold {enrichment_threshold}'
-        # write_to_debug_file(cgi_debug_path_f, f'____________________________________________________\n')
-        # write_to_debug_file(cgi_debug_path_f, parameters)
         if maxquant_analysis_is_needed:
             parameters += f' --enzymes {form["enzyme"].value} -mq'
 
@@ -322,7 +317,7 @@ def run_cgi():
         cgi_debug_path_f.close()
 
     except Exception as e:
-        edit_progress(html_path, active=False)
+        edit_progress(output_html_path, active=False)
 
         msg = 'CGI crashed before the job was submitted :('
         with open(output_html_path) as f:
