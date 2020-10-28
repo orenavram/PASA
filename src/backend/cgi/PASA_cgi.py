@@ -223,7 +223,8 @@ def run_cgi():
         peek_form(cgi_debug_path_f, form)
 
         job_title = ''
-        if form['job_title'].value != '':
+        if 'job_title' in form and form['job_title'].value != '':
+            # 'job_title' is NOT in form when the text field is disabled...
             job_title = form['job_title'].value.strip()
 
         elution_file_name = None
