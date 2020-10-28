@@ -107,7 +107,7 @@
                     the user can specify the digestion
                     enzyme used to proteolytically cleave the antibodies (by default, Trypsin). Instead of (2), the
                     user can provide a file of derived peptides obtained using MaxQuant
-                    (<a href="https://doi.org/10.1038/nbt.1511">Cox & Mann, 2008</a>); (3) As part of the advanced options,
+                    (<a href="https://doi.org/10.1038/nbt.1511">Cox & Mann, 2008</a>) version 1.6.14; (3) As part of the advanced options,
 
                     PASA accepts proteomics spectral files in raw format (at least two technical
                     replicates of each fraction elution/flow-through). For the integration with data derived
@@ -125,7 +125,7 @@
                     <!--(<a href="https://doi.org/10.1016/s1074-7613(00)00006-6">Xu & Davis, 2000</a>), which is-->
                     <!--overwhelmingly responsible for antigen recognition. The CDRH3 is thus considered-->
                     <!--as a unique identifier of antibody clones and hence is the focus of our analysis. -->
-                    PASA is divided into two main phases. The first part utilizes the MaxQuant,
+                    PASA is divided into two main phases. The first part utilizes the MaxQuant (current version used is 1.6.14),
                     a proteomic search algorithm that is used by
                     PASA to identify the sequences of peptides derived from serum
                     antibodies (<a href="https://doi:10.1038/nbt.1511">Cox & Mann, 2008</a>).
@@ -158,13 +158,32 @@
                             respect to the BCR-seq database</li>
                     </ul>
 
-
-                    <br><br>
+                    <br>
 
                     For further examples, please see <a href="gallery.html">Gallery Section</a> or submit a
                     <a href="index_example.html">running example</a>
 
+                    <br><br>
+
+                    <h2>Running times</h2>
+                    PASA's running time may vary as it depends on the number of replicates and databases used. For instance, the analysis of the example input files (elution and flow-through triplicates, each triplicate of size ~6GB, together with three V-gene sequence database, each of size 35 MB) should take less than three hrs. The user may wish to perform MaxQuant analysis by themselves. In this case, they can provide the curated peptides list to PASA (that in turn, will skip the MaxQuant analysis), and in this case, the running time should not take more than a few minutes.
+
+                    <br><br>
+
+                    <h2>Non-antigen-specific analysis</h2>
+                    PASA was mainly designed to analyze antigen-specific data. Nevertheless, if one has a V gene
+                    sequence database and a list of peptides (in MaxQuant output format) that were observed in Mass-Spec
+                    raw files, and would like to utilize PASA to analyze non anti-gen specific data, they may do so
+                    using the following workaround:<br>
+                    1. Provide an appropriate V gene sequence database.<br>
+                    2. Choose "Peptides (text) files" option in the "Peptides data type" field.<br>
+                    3. Provide the output peptides list as the "Elution peptides list" in the corresponding field.<br>
+                    4. Provide a text file containing nothing but MaxQuant output header as the "Flow-through peptides
+                    list" in the corresponding field (MaxQuant output header should be copied from the "Elution peptides list" provided in the previous step).<br>
+                    5. Submit!
+
                     <br><br><br><br><br><br>
+
                     <!--<h2>References</h2>-->
                     <!--<li><a href="https://pubs.acs.org/doi/abs/10.1021/ac4037679" target="_blank" id="ref1">Boutz, D. R. et al. Proteomic identification of monoclonal antibodies from serum. Anal. Chem. (2014). doi:10.1021/ac4037679.</a></li>-->
                     <!--<br>-->
