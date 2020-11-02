@@ -54,7 +54,7 @@ def generate_pie_chart(data_path, out_path, token_number):
     plt.close()
 
 
-def plot_barplot(data_path, out_path, token_numbers, manipulate=lambda x: x, sorting_key=lambda x: x, x_label='', y_label='% of total\n', as_proportions=True, rotation=0):
+def plot_barplot(data_path, out_path, token_numbers, manipulate=lambda x: x, sorting_key=lambda x: x, x_label='', y_label='Relative frequency (in %)\n', as_proportions=True, rotation=0):
 
     logger.info(f'Ploting proteomics_vs_genetics_plot of {out_path}')
     frequency_counter = upload_cdr3_data(data_path, token_numbers, manipulate=manipulate)
