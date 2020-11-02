@@ -21,6 +21,18 @@ def get_intensities_columns(peptides_path):
         elif field == 'Potential contaminant':
             contaminant = i
 
+    if not total_intensity or not reverese or not contaminant:
+        err_msg = 'Flow-through ' if 'ft_peptides.txt' in peptides_path else 'Elution '
+        err_msg += 'peptides list does not comply with MaxQuant output format (could not find '
+        if not total_intensity:
+            err_msg += '"Intensity"'
+        elif not reverese:
+            err_msg += '"Reverese"'
+        else:
+            err_msg += '"Potential contaminant"'
+        err_msg += ' field).'
+        raise TypeError(err_msg)
+
     # detect replication intensities columns
     i = total_intensity + 1
     replications_intensities = []
@@ -45,8 +57,11 @@ def get_peptide_to_avg_intensity(mq_output_path):
 
     with open(mq_output_path) as f:
         f.readline()  # skip header
-        for line in f:
+        for i, line in enumerate(f):
             splitted_line = line.rstrip().split('\t')
+
+            if contaminant_index > len(splitted_line):
+                raise IndexError(f'Badly formatted peptides list. Contaminant token index is number {contaminant_index}, however, line number {i+1} contains only {len(splitted_line)} tokens.')
 
             if splitted_line[reverese_index] == '+':
                 # decoy
