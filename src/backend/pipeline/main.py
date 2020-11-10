@@ -19,7 +19,7 @@ import CONSTANTS as CONSTS
 # from email_sender import send_email
 from html_editor import edit_failure_html, edit_success_html
 from maxquant_executer import run_maxquant
-from auxiliaries import wait_for_maxquant, measure_time, edit_progress
+from auxiliaries import wait_for_maxquant, measure_time, edit_progress, update_html
 from peptides_classification import classify_peptides
 from peptides_filtration import filter_peptides
 from results_ploting import plot_results
@@ -74,6 +74,7 @@ def main(wd, min_fold, maxquant_analysis_is_needed, enzymes):
     dbs_dir = f'{wd}/dbs'
 
     html_path = f'{wd}/{CONSTS.RESULT_WEBPAGE_NAME}'
+    update_html(html_path, 'QUEUED', 'RUNNING')
     edit_progress(html_path, progress=4)
 
     output_dir = os.path.join(wd, CONSTS.OUTPUT_DIR_NAME)
@@ -108,7 +109,7 @@ def main(wd, min_fold, maxquant_analysis_is_needed, enzymes):
             unpack_zipped_data(f'{wd}/el.zip', el_raw_path)
         # else, it's example run. The data is already there.
         logger.info(f'el_raw_path content is: {os.listdir(el_raw_path)}')
-        run_maxquant(dbs_dir, enzymes, 'elution', run_number, el_raw_path)
+        el_mqpar_path = run_maxquant(dbs_dir, enzymes, 'elution', run_number, el_raw_path)
         edit_progress(html_path, progress=15)
 
         # flowthrough analysis
@@ -118,7 +119,7 @@ def main(wd, min_fold, maxquant_analysis_is_needed, enzymes):
             edit_progress(html_path, progress=20)
         # else, it's example run. The data is already there.
         logger.info(f'ft_raw_path content is: {os.listdir(ft_raw_path)}')
-        run_maxquant(dbs_dir, enzymes, 'flowthrough', run_number, ft_raw_path)
+        ft_mqpar_path = run_maxquant(dbs_dir, enzymes, 'flowthrough', run_number, ft_raw_path)
 
         time_passed = wait_for_maxquant(el_raw_path, html_path=html_path)
         time_passed = wait_for_maxquant(ft_raw_path, time_passed=time_passed, html_path=html_path)
@@ -129,9 +130,13 @@ def main(wd, min_fold, maxquant_analysis_is_needed, enzymes):
         shutil.copy(f'{el_raw_path}/combined/txt/peptides.txt', f'{wd}/el_peptides.txt')
         shutil.copy(f'{ft_raw_path}/combined/txt/peptides.txt', f'{wd}/ft_peptides.txt')
 
-        # add peptides list also to output files
+        # add peptides list also to output the files
         shutil.copy(f'{el_raw_path}/combined/txt/peptides.txt', f'{output_dir}/text/el_peptides.txt')
         shutil.copy(f'{ft_raw_path}/combined/txt/peptides.txt', f'{output_dir}/text/ft_peptides.txt')
+
+        # add maxquant configuration file to the output files
+        shutil.copy(el_mqpar_path, f'{output_dir}/text/el_mqpar.xml')
+        shutil.copy(ft_mqpar_path, f'{output_dir}/text/ft_mqpar.xml')
         logger.info('MaxQuant analysis results are ready!')
     else:
         logger.info('_'*100)

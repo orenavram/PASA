@@ -135,6 +135,7 @@ def run_maxquant(pasa_dbs_path, enzymes, data_type, job_id,
     subprocess.run(cmd, shell=True)
 
     logger.info(f'MaxQuant analysis for {data_type} data was fetched successfully.')
+    return mqpar_path
 
 
 
