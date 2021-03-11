@@ -173,15 +173,14 @@ def run_cgi():
     # print_hello_world() # for debugging
     form = cgi.FieldStorage()  # extract POSTed object
 
-    # random_chars = "".join(choice(string.ascii_letters + string.digits) for x in range(20))
     # adding 20 random digits to prevent users guess a number and see data that are not their's
     run_number = str(round(time())) + str(randint(10 ** 19, 10 ** 20 - 1))
-    # run_number = str(randint(1, 10 ** 6 - 1))
-    if form['example_page'].value == 'yes':
-        run_number = 'example'
+    # run_number = 'test'
+    output_url = f'{CONSTS.WEBSERVER_RESULTS_URL}/{run_number}/{CONSTS.RESULT_WEBPAGE_NAME}'
 
-    results_url = os.path.join(CONSTS.WEBSERVER_RESULTS_URL, run_number)
-    output_url = os.path.join(results_url, CONSTS.RESULT_WEBPAGE_NAME)
+    if form['example_page'].value == 'yes':
+        run_number = 'example'  # str(round(time())) + str(randint(1000,9999)) # adding 4 random figures to prevent users see data that are not their's
+        output_url = os.path.join(f'{CONSTS.WEBSERVER_URL}/{run_number}/results.html')
 
     wd = os.path.join(CONSTS.WEBSERVER_RESULTS_DIR, run_number)
     os.makedirs(wd, exist_ok=True)
