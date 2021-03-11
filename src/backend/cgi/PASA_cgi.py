@@ -138,7 +138,7 @@ def write_cmds_file(cmds_file, parameters, run_number):
 
 
 def save_file_to_disk(cgi_debug_path_f, form, wd, file_type):
-    write_to_debug_file(cgi_debug_path_f, f'{file_type in form}')
+    write_to_debug_file(cgi_debug_path_f, f'{file_type} in form: {file_type in form}')
     if form[file_type].filename in os.listdir(wd):
         write_to_debug_file(cgi_debug_path_f, f'changing file name of :\n{form[file_type].filename}')
         # form[file_type].filename = get_alternative_name(file_type, form, wd)
